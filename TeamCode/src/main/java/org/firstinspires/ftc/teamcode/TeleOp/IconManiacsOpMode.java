@@ -99,7 +99,7 @@ public class IconManiacsOpMode extends OpMode
         double rightPower;
         double armPower;
         double conveyorPower;
-
+/*
         double drive = -gamepad1.left_stick_y;  // maps the joysticks to the motors respective of the sides
         double strafe = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
@@ -108,7 +108,7 @@ public class IconManiacsOpMode extends OpMode
         bot.backLeft.setPower(drive - strafe + rotate);
         bot.frontRight.setPower(drive - strafe - rotate);
 
-
+*/
         //gamepad 1
         leftPower = -gamepad1.left_stick_y;  // maps the joysticks to the motors respective of the sides
         rightPower  = -gamepad1.right_stick_y;
@@ -131,29 +131,18 @@ public class IconManiacsOpMode extends OpMode
       //  bot.frontRight.setPower(rightPower);
        // bot.backRight.setPower(rightPower);
 
-        if(gamepad1.b){ // increases the positions of both intake wheels 1 and 2
-            bot.intakeWheel1POS += bot.SERVO_UP_POWER;
-            bot.intakeWheel2POS += bot.SERVO_UP_POWER;
-        } else if(gamepad1.a){ // decreases the positions of both intake wheels 1 and 2
-            bot.intakeWheel1POS -= bot.SERVO_DOWN_POWER;
-            bot.intakeWheel2POS -= bot.SERVO_DOWN_POWER;
-        }
-        // sets the cap for both intake wheels 1 and 2
-   //     bot.intakeWheel1POS = Range.clip(bot.intakeWheel1POS, bot.SERVO_LOW_RANGE, bot.SERVO_HIGH_RANGE);
-     //   bot.intakeWheel2POS = Range.clip(bot.intakeWheel2POS, bot.SERVO_LOW_RANGE, bot.SERVO_HIGH_RANGE);
 
-        // the function that actually moves both of intake wheels 1 and 2
-        bot.intakeWheel1.setPosition(bot.intakeWheel1POS);
-        bot.intakeWheel2.setPosition(bot.intakeWheel2POS);
 
-        if(gamepad1.right_trigger == 1){ // increases the platform's current POS
+
+
+        if(gamepad1.right_bumper){ // increases the platform's current POS
             //platformPOS += SERVO_UP_POWER;
-            bot.platform.setPower(1);
-        } else if(gamepad1.left_trigger == 1){ // decreases the platform's current POS
+            bot.intake.setPower(1);
+        } else if(gamepad1.left_bumper){ // decreases the platform's current POS
             // platformPOS -= SERVO_DOWN_POWER;
-            bot.platform.setPower(-1);
+            bot.intake.setPower(-1);
         } else {
-            bot.platform.setPower(0);
+            bot.intake.setPower(0);
         }
 
         //      bot.platformPOS = Range.clip(bot.platformPOS, bot.SERVO_LOW_RANGE, bot.SERVO_HIGH_RANGE); // sets the cap for the platform's range of movement
@@ -186,7 +175,7 @@ public class IconManiacsOpMode extends OpMode
         if(gamepad2.a) {
             //set flag is true
             do {
-                bot.shooter.setPower(1);
+                bot.shooter.setPower(0.75);
             } while (gamepad2.a);
             // power is subject to change
             // this moves the wheels in front of the conveyor belt
@@ -198,21 +187,14 @@ public class IconManiacsOpMode extends OpMode
         }
 
 
-        if(gamepad2.x){ // the ringBringer position increases
-            bot.ringBringerPOS += bot.SERVO_UP_POWER;
-        } else if(gamepad2.y){ // the ring Bringer position decreases
-            bot.ringBringerPOS -= bot.SERVO_DOWN_POWER;
-        }
-
       //  bot.ringBringerPOS = Range.clip(bot.ringBringerPOS, bot.SERVO_LOW_RANGE, bot.SERVO_HIGH_RANGE); //sets the range of motion for the ringBringer servo
-        bot.ringBringer.setPosition(bot.ringBringerPOS); // moves the legendary ringBringer
+
 
         //bot.clawPOS = Range.clip(bot.clawPOS, bot.SERVO_LOW_RANGE, bot.SERVO_HIGH_RANGE); // sets the cap for the range of movement for the claw
         bot.claw.setPosition(bot.clawPOS); // this is the function that actually moves the servo
         // Show the elapsed game time and wheel power.
         telemetry.addData("G2:claw", "%.2f", bot.clawPOS); // shows the current position of the claw servo
         //   telemetry.addData("G1:platform", "%.2f", bot.platformPOS); // shows the current position of the platform servo
-        telemetry.addData("G1:IntakeWheels", "intakeWheel1: (%.2f), intakeWheel2: (%.2f)", bot.intakeWheel1POS, bot.intakeWheel2POS); //shows the current positions of the two intake wheels
         // telemetry.addData("Status", "Run Time: " + runtime.toString()); // idk what this does
         telemetry.addData("G1:Motors", "left (%.2f), right (%.2f)", leftPower, rightPower); // shows the current position of the motors that move the robot itself
         telemetry.update(); //updates the info to the bottom of the driver station phone

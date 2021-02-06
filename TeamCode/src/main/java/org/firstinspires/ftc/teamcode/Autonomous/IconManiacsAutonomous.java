@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 // List where other files are located that are used in this OpMode
 import org.firstinspires.ftc.teamcode.HardwareMap.HardwareMap_Example;
+import org.firstinspires.ftc.teamcode.IMHardwareBot;
 
 /**
  * In this example:
@@ -51,9 +52,9 @@ import org.firstinspires.ftc.teamcode.HardwareMap.HardwareMap_Example;
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
 //@Disabled
 
-public class Auto_DriveByEncoder_Example extends HardwareMap_Example {
+public class IconManiacsAutonomous extends HardwareMap_Example {
 
-
+    IMHardwareBot bot = new IMHardwareBot();
     /*
         CHAWKS: It has begun!!! Run the OpMode!!! Make the robot execute all our code!!!
     */
@@ -85,18 +86,16 @@ public class Auto_DriveByEncoder_Example extends HardwareMap_Example {
         telemetry.update();
 
         /*
-            CHAWKS: Step 1. Hit Play to run through the code!
+            CHAWKS: Step 1. Hit P
+           lay to run through the code!
         */
         // MUST HAVE THIS LINE BELOW
         waitForStart();
+        bot.driveForward(1); // drive forward
+        sleep(2000); //pause
+        bot.turnLeft(1); //turn left
+        sleep(2000); // pause
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-
-        sleep(1000);     // pause
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();

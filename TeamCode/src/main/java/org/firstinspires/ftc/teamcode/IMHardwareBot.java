@@ -68,10 +68,8 @@ public class IMHardwareBot
     public DcMotor  arm = null;
     public DcMotor shooter = null;
     public Servo claw = null;
-    public DcMotor platform = null; //name will most likely change
-    public Servo intakeWheel1 = null;
-    public Servo intakeWheel2 = null;
-    public Servo ringBringer = null;
+    public DcMotor intake = null; //name will most likely change
+
 
     // constants and variables to be used when running the code (specifically servos)
     public static final double SERVO_HOME =  0.0 ;
@@ -82,16 +80,6 @@ public class IMHardwareBot
 
     // initial positions of the servos used in the program
     public static double clawPOS = 0.0;
-
-    // public static double platformPOS = 0.0;
-
-    public static double intakeWheel1POS = 0.0;
-
-    public static double intakeWheel2POS = 0.0;
-
-    public static double ringBringerPOS = 0.0;
-
-    //  public static double armPOS = 0.0;
 
 
 
@@ -117,7 +105,7 @@ public class IMHardwareBot
         conveyorBelt = hwMap.get(DcMotor.class, "conveyorBelt");
         arm = hwMap.get(DcMotor.class, "arm");
         shooter = hwMap.get(DcMotor.class, "conBeltWheels");
-        platform = hwMap.get(DcMotor.class, "platform");
+        intake = hwMap.get(DcMotor.class, "platform");
 
         // Set all motors to zero power
         frontLeft.setPower(0);
@@ -127,7 +115,7 @@ public class IMHardwareBot
         arm.setPower(0);
         conveyorBelt.setPower(0);
         shooter.setPower(0);
-        platform.setPower(0);
+        intake.setPower(0);
 
 
         // sets zeroPowerBehavior
@@ -138,7 +126,7 @@ public class IMHardwareBot
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         conveyorBelt.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        platform.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Sets motor directions
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -148,7 +136,7 @@ public class IMHardwareBot
         arm.setDirection(DcMotor.Direction.FORWARD);
         conveyorBelt.setDirection(DcMotor.Direction.FORWARD);
         shooter.setDirection(DcMotor.Direction.REVERSE);
-        platform.setDirection(DcMotor.Direction.FORWARD);
+        intake.setDirection(DcMotor.Direction.FORWARD);
 
         // sets enconder mode to run with encoder
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -158,19 +146,45 @@ public class IMHardwareBot
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         conveyorBelt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        platform.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         claw = hwMap.get(Servo.class, "claw");
-        intakeWheel1 = hwMap.get(Servo.class, "intakeWheel1");
-        intakeWheel2 = hwMap.get(Servo.class, "intakeWheel2");
-        ringBringer = hwMap.get(Servo.class, "ringBringer");
 
         //platform.setPosition(SERVO_HOME);
         claw.setPosition(SERVO_HOME);
-        intakeWheel1.setPosition(SERVO_HOME);
-        intakeWheel2.setPosition(SERVO_HOME);
-        ringBringer.setPosition(SERVO_HOME);
+
 
     }
+
+    public void driveForward(int power){
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+
+    public void turnLeft(int power){
+        frontLeft.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+        frontRight.setPower(-power);
+    }
+
+    public void turnRight(int power){
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+        frontRight.setPower(power);
+    }
+
+    public void driveBackwards(int power){
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
+        frontRight.setPower(-power);
+    }
+
+
+
 }
