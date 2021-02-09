@@ -51,7 +51,10 @@ public class IconManiacsOpMode extends OpMode
 {
     // Declare OpMode members.
     IMHardwareBot bot = new IMHardwareBot();
-
+    double leftPower;
+    double rightPower;
+    double armPower;
+    double conveyorPower;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -63,6 +66,7 @@ public class IconManiacsOpMode extends OpMode
         bot.init(hardwareMap);
         telemetry.addData("Status:", "Initialized Successfully");
         telemetry.update();
+
     }
 
     /*
@@ -78,7 +82,10 @@ public class IconManiacsOpMode extends OpMode
      */
     @Override
     public void start() {
-
+        telemetry.addData("Status:", "Getting Ready");
+        telemetry.update();
+        telemetry.addData("Status:", "Initialized Successfully");
+        telemetry.update();
     }
 
     /*
@@ -86,20 +93,13 @@ public class IconManiacsOpMode extends OpMode
      */
     @Override
     public void loop() {
-        telemetry.addData("Status:", "Getting Ready");
-        telemetry.update();
-        bot.init(hardwareMap);
-        telemetry.addData("Status:", "Initialized Successfully");
-        telemetry.update();
+
 
         // run until the end of the match (driver presses STOP)
 
         // Setup a variable for each drive wheel to save power level for telemetry
-        double leftPower;
-        double rightPower;
-        double armPower;
-        double conveyorPower;
-/*
+
+
         double drive = -gamepad1.left_stick_y;  // maps the joysticks to the motors respective of the sides
         double strafe = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
@@ -108,10 +108,7 @@ public class IconManiacsOpMode extends OpMode
         bot.backLeft.setPower(drive - strafe + rotate);
         bot.frontRight.setPower(drive - strafe - rotate);
 
-*/
-        //gamepad 1
-        leftPower = -gamepad1.left_stick_y;  // maps the joysticks to the motors respective of the sides
-        rightPower  = -gamepad1.right_stick_y;
+
 
         // both left and right power sets the cap for the motors' range of motion
         //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
@@ -124,21 +121,21 @@ public class IconManiacsOpMode extends OpMode
 //        leftPower2    = Range.clip(drive2 + turn2, -1.0, 1.0) ;
 //        rightPower2   = Range.clip(drive2 - turn2, -1.0, 1.0) ;
 
+        //gamepad 1
+        leftPower =  -gamepad1.left_stick_y;  // maps the joysticks to the motors respective of the sides
+        rightPower  = -gamepad1.right_stick_y;
+
         //gamepad 1 buttom mapping
         // Send calculated power to wheels
-    //    bot.frontLeft.setPower(leftPower);
-      //  bot.backLeft.setPower(leftPower);
-      //  bot.frontRight.setPower(rightPower);
-       // bot.backRight.setPower(rightPower);
+        bot.frontLeft.setPower(leftPower);
+        bot.backLeft.setPower(leftPower);
+        bot.frontRight.setPower(rightPower);
+        bot.backRight.setPower(rightPower);
 
-
-
-
-
-        if(gamepad1.right_bumper){ // increases the platform's current POS
+        if(gamepad2.right_bumper){ // increases the platform's current POS
             //platformPOS += SERVO_UP_POWER;
             bot.intake.setPower(1);
-        } else if(gamepad1.left_bumper){ // decreases the platform's current POS
+        } else if(gamepad2.left_bumper) { // decreases the platform's current POS
             // platformPOS -= SERVO_DOWN_POWER;
             bot.intake.setPower(-1);
         } else {
@@ -158,12 +155,17 @@ public class IconManiacsOpMode extends OpMode
             bot.backRight.setPower(-1);
             bot.frontRight.setPower(1);
             bot.backLeft.setPower(1);
+        } else {
+            bot.frontLeft.setPower(0);
+            bot.backRight.setPower(0);
+            bot.frontRight.setPower(0);
+            bot.backLeft.setPower(0);
         }
 
         //gamepad2
         // same thing as gamepad 1 right above ^^^^^
-        armPower = -gamepad2.left_stick_y;
-       conveyorPower  = gamepad2.right_stick_y;
+        armPower = 0.4 * -gamepad2.left_stick_y;
+       conveyorPower  = -gamepad2.right_stick_y;
        // armPower = Range.clip(drive2 + turn2, -1.0, 1.0) ;
      //   conveyorPower = Range.clip(drive2 - turn2, -1.0, 1.0) ;
 
@@ -172,14 +174,13 @@ public class IconManiacsOpMode extends OpMode
         bot.conveyorBelt.setPower(conveyorPower); // moves the conveyor belt
 
         // still under the works
+
         if(gamepad2.a) {
-            //set flag is true
-            do {
                 bot.shooter.setPower(0.75);
-            } while (gamepad2.a);
-            // power is subject to change
-            // this moves the wheels in front of the conveyor belt
+        } else if(gamepad2.y) {
+            bot.shooter.setPower(0);
         }
+
         if(gamepad2.right_trigger == 1){ // if the gamepad 2 right trigger gets pressed....
             bot.clawPOS += bot.SERVO_UP_POWER; // the claw position increases
         } else if(gamepad2.left_trigger == 1){ // if the gamepad 2 left trigger gets pressed...
@@ -196,7 +197,7 @@ public class IconManiacsOpMode extends OpMode
         telemetry.addData("G2:claw", "%.2f", bot.clawPOS); // shows the current position of the claw servo
         //   telemetry.addData("G1:platform", "%.2f", bot.platformPOS); // shows the current position of the platform servo
         // telemetry.addData("Status", "Run Time: " + runtime.toString()); // idk what this does
-        telemetry.addData("G1:Motors", "left (%.2f), right (%.2f)", leftPower, rightPower); // shows the current position of the motors that move the robot itself
+ //       telemetry.addData("G1:Motors", "left (%.2f), right (%.2f)", leftPower, rightPower); // shows the current position of the motors that move the robot itself
         telemetry.update(); //updates the info to the bottom of the driver station phone
     }
 

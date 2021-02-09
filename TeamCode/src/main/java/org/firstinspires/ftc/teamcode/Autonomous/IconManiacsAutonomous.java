@@ -79,7 +79,7 @@ public class IconManiacsAutonomous extends HardwareMap_Example {
             CHAWKS: Step 0. Initialize OUR ROBOT
         */
         // MUST HAVE THIS LINE BELOW
-        init(hardwareMap);
+        bot.init(hardwareMap);
 
         // Send telemetry message to "Driver Station" signify robot waiting;
         telemetry.addData("Status: ", "Hit [PLAY] to start!");    //
@@ -91,11 +91,19 @@ public class IconManiacsAutonomous extends HardwareMap_Example {
         */
         // MUST HAVE THIS LINE BELOW
         waitForStart();
+        /*
         bot.driveForward(1); // drive forward
+        bot.driveForward(1);
+        bot.driveForward(1);
+        bot.driveForward(1);
+        bot.driveForward(1);
+        bot.powerOff();
         sleep(2000); //pause
+       /*
         bot.turnLeft(1); //turn left
+        bot.powerOff();
         sleep(2000); // pause
-
+*/
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();

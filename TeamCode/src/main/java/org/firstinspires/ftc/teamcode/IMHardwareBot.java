@@ -35,6 +35,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import static java.lang.StrictMath.abs;
+
 /**
  * This is NOT an opmode.
  *
@@ -104,8 +106,8 @@ public class IMHardwareBot
         backRight = hwMap.get(DcMotor.class, "backRight");
         conveyorBelt = hwMap.get(DcMotor.class, "conveyorBelt");
         arm = hwMap.get(DcMotor.class, "arm");
-        shooter = hwMap.get(DcMotor.class, "conBeltWheels");
-        intake = hwMap.get(DcMotor.class, "platform");
+        shooter = hwMap.get(DcMotor.class, "shooter");
+        intake = hwMap.get(DcMotor.class, "intake");
 
         // Set all motors to zero power
         frontLeft.setPower(0);
@@ -136,7 +138,7 @@ public class IMHardwareBot
         arm.setDirection(DcMotor.Direction.FORWARD);
         conveyorBelt.setDirection(DcMotor.Direction.FORWARD);
         shooter.setDirection(DcMotor.Direction.REVERSE);
-        intake.setDirection(DcMotor.Direction.FORWARD);
+        intake.setDirection(DcMotor.Direction.REVERSE);
 
         // sets enconder mode to run with encoder
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -156,35 +158,43 @@ public class IMHardwareBot
 
 
     }
-
-    public void driveForward(int power){
+/*
+    public void driveForward(double power){
         frontLeft.setPower(power);
         frontRight.setPower(power);
         backLeft.setPower(power);
         backRight.setPower(power);
     }
 
-    public void turnLeft(int power){
+    public void turnLeft(double power){
         frontLeft.setPower(power);
         backLeft.setPower(power);
         backRight.setPower(-power);
         frontRight.setPower(-power);
     }
 
-    public void turnRight(int power){
+    public void turnRight(double power){
         frontLeft.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(power);
         frontRight.setPower(power);
     }
 
-    public void driveBackwards(int power){
+    public void driveBackwards(double power){
         frontLeft.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(-power);
         frontRight.setPower(-power);
     }
 
+    public void powerOff(){
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontRight.setPower(0);
+    }
+
+*/
 
 
 }
