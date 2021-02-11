@@ -42,6 +42,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.HardwareMap.HardwareMap_Example;
 import org.firstinspires.ftc.teamcode.IMHardwareBot;
 
+import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawClose;
 import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawOpen;
 
 /**
@@ -54,7 +55,7 @@ import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawOpen;
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
 //@Disabled
 
-public class IconManiacsAutonomous extends LinearOpMode {
+public class IconManiacsAutonomous_A extends LinearOpMode {
 
     IMHardwareBot bot = new IMHardwareBot();
     /*
@@ -74,7 +75,7 @@ public class IconManiacsAutonomous extends LinearOpMode {
                     Why is this good for the Drivers?
         */
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status: ", "Hit [Init] to Initialize ze bot");    //
+        telemetry.addData("Status: ", "Hit [Init] to Initialize");    //
         telemetry.update();
 
         /*
@@ -99,41 +100,41 @@ public class IconManiacsAutonomous extends LinearOpMode {
         bot.arm.setPower(0);
 
         // drives forward
-        bot.driveForward(0.75, 2750); // drive forward
+        bot.driveForward(0.75, 3000);
 
+        //pause
+        sleep(450);
+
+        // strafes left
+        bot.strafeLeft(0.8, 850);
         //pause
         sleep(600);
 
-        // strafes left
-        bot.strafeLeft(0.8, 600);
-
         // sets arm down
-        bot.moveArm(0.45, 600);
+        bot.moveArm(0.45, 450);
 
         // pauses
-        sleep(150);
+        sleep(500);
 
         // releases the wobble goal
         bot.moveClaw(clawOpen, 1000);
 
-        // pause
-        sleep(100);
-
         // strafes right and turns on shooter
-        bot.strafeRight(0.8, 1100);
+        bot.strafeRight(0.8, 1650);
 
         // pause
         sleep(400);
 
         //moves back
-        bot.driveBackwards(0.75, 550);
+        bot.driveBackwards(0.75, 900);
 
         // pause
-        sleep(500);
+        sleep(400);
 
-        // turns on conveyor belt and shoots
-        bot.moveConveyorBelt(1, 5000);
+        // turns on conveyor belt
+        bot.moveConveyorBelt(1, 3000);
 
+        // turns on the shooter at the same time
         Thread thread1 = new Thread () {
             public void run () {
                 try {
@@ -142,11 +143,57 @@ public class IconManiacsAutonomous extends LinearOpMode {
                     e.printStackTrace();
                 }
             }
-        }thread1.start();
+        };start();
+
+        thread1.join();
+
+        // drives backwards to the initial position
+        bot.driveBackwards(0.75, 1420);
+
+        //pause
+        sleep(600);
+
+        //opens the claw
+        bot.claw.setPosition(clawOpen);
+
+        //pause
+        sleep(400);
+
+        // strafes left
+        bot.strafeLeft(0.8, 945);
+
+        //sleep
+        sleep(300);
+
+        //grabs the 2nd wobble goal
+        bot.claw.setPosition(clawClose);
+
+        //pause
+        sleep(1500);
+
+        //lifts up the 2nd blue wobble goal
+        bot.moveArm(-0.5, 390);
+
+        // pause
+        sleep(300);
+
+        // drives forward
+        bot.driveForward(.75, 2160);
+
+        //pause
+        sleep(300);
+
+        //strafe left
+        bot.strafeLeft(0.8, 400);
+
+        //drops the wobble goal
+        bot.moveArm(0.50, 430);
+
+        // releases the wobble goal
+        bot.moveClaw(clawOpen, 1000);
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();
     }
-
 
 }
