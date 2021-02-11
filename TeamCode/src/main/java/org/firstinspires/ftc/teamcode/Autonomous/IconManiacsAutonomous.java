@@ -42,17 +42,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.HardwareMap.HardwareMap_Example;
 import org.firstinspires.ftc.teamcode.IMHardwareBot;
 
+import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawOpen;
+
 /**
  * In this example:
  * This file illustrates the concept of driving OUR robot in HardwareMap_Example
  *
  */
 // CHAWKS: Name it something useful!
-@Autonomous(name="RedZone Right 1 Test", group="RedTest")
+@Autonomous(name="IM Autonomous A", group="RedTest")
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
 //@Disabled
 
-public class IconManiacsAutonomous extends HardwareMap_Example {
+public class IconManiacsAutonomous extends LinearOpMode {
 
     IMHardwareBot bot = new IMHardwareBot();
     /*
@@ -61,7 +63,7 @@ public class IconManiacsAutonomous extends HardwareMap_Example {
 
     // MUST HAVE
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
 
          // Initialize the drive system variables.
@@ -90,20 +92,57 @@ public class IconManiacsAutonomous extends HardwareMap_Example {
            lay to run through the code!
         */
         // MUST HAVE THIS LINE BELOW
+        // waits for driver to hit start
         waitForStart();
-        /*
-        bot.driveForward(1); // drive forward
-        bot.driveForward(1);
-        bot.driveForward(1);
-        bot.driveForward(1);
-        bot.driveForward(1);
-        bot.powerOff();
-        sleep(2000); //pause
-       /*
-        bot.turnLeft(1); //turn left
-        bot.powerOff();
-        sleep(2000); // pause
-*/
+        // turns off the claw and arm
+        bot.claw.setPosition(0);
+        bot.arm.setPower(0);
+
+        // drives forward
+        bot.driveForward(0.75, 2750); // drive forward
+
+        //pause
+        sleep(600);
+
+        // strafes left
+        bot.strafeLeft(0.8, 600);
+
+        // sets arm down
+        bot.moveArm(0.45, 600);
+
+        // pauses
+        sleep(150);
+
+        // releases the wobble goal
+        bot.moveClaw(clawOpen, 1000);
+
+        // pause
+        sleep(100);
+
+        // strafes right and turns on shooter
+        bot.strafeRight(0.8, 1100);
+
+        // pause
+        sleep(400);
+
+        //moves back
+        bot.driveBackwards(0.75, 550);
+
+        // pause
+        sleep(500);
+
+        // turns on conveyor belt and shoots
+        bot.moveConveyorBelt(1, 5000);
+
+        Thread thread1 = new Thread () {
+            public void run () {
+                try {
+                    bot.shoot(0.65, 10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }thread1.start();
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();

@@ -35,7 +35,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.function.InterruptableThrowingRunnable;
+
 import static java.lang.StrictMath.abs;
+import static java.lang.Thread.sleep;
 
 /**
  * This is NOT an opmode.
@@ -75,14 +78,13 @@ public class IMHardwareBot
 
     // constants and variables to be used when running the code (specifically servos)
     public static final double SERVO_HOME =  0.0 ;
-    public static final double SERVO_UP_POWER =  0.1 ;
-    public static final double SERVO_DOWN_POWER  =  0.1 ;
-    public static final double SERVO_LOW_RANGE = 0.0;
-    public static final double SERVO_HIGH_RANGE = 1.0;
+    public static final double SERVO_UP_POWER =  .001d ;
+    public static final double SERVO_DOWN_POWER  = .001d ;
 
     // initial positions of the servos used in the program
-    public static double clawPOS = 0.0;
-
+    public static final double clawOpen = 11.5;
+    public static final double clawClose = 0.0;
+    public static double clawPOS = clawOpen;
 
 
     /* local OpMode members. */
@@ -158,33 +160,40 @@ public class IMHardwareBot
 
 
     }
-/*
-    public void driveForward(double power){
+
+    public void driveForward(double power, int time) throws InterruptedException {
         frontLeft.setPower(power);
         frontRight.setPower(power);
         backLeft.setPower(power);
         backRight.setPower(power);
+        sleep(time);
+        powerOff();
     }
 
-    public void turnLeft(double power){
+    public void turnLeft(double power, int time) throws InterruptedException {
         frontLeft.setPower(power);
         backLeft.setPower(power);
         backRight.setPower(-power);
         frontRight.setPower(-power);
+        sleep(time);
+        powerOff();
     }
 
-    public void turnRight(double power){
+    public void turnRight(double power, int time) throws InterruptedException{
         frontLeft.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(power);
         frontRight.setPower(power);
+        sleep(time);
     }
 
-    public void driveBackwards(double power){
+    public void driveBackwards(double power, int time) throws InterruptedException {
         frontLeft.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(-power);
         frontRight.setPower(-power);
+        sleep(time);
+        powerOff();
     }
 
     public void powerOff(){
@@ -194,7 +203,45 @@ public class IMHardwareBot
         frontRight.setPower(0);
     }
 
-*/
+    public void strafeLeft(double power, int time) throws InterruptedException{
+        frontLeft.setPower(-power);
+        backRight.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        sleep(time);
+        powerOff();
+    }
 
+    public void strafeRight(double power, int time) throws InterruptedException{
+        frontLeft.setPower(power);
+        backRight.setPower(power);
+        backLeft.setPower(-power);
+        frontRight.setPower(-power);
+        sleep(time);
+        powerOff();
+    }
 
+    public void moveArm(double power, int time) throws InterruptedException {
+        arm.setPower(power);
+        sleep(time);
+        arm.setPower(0);
+    }
+
+    public void moveClaw(double position, int time) throws InterruptedException {
+        claw.setPosition(position);
+        sleep(time);
+        claw.setPosition(SERVO_HOME);
+    }
+
+    public void shoot(double power, int time) throws InterruptedException {
+        shooter.setPower(power);
+        sleep(time);
+        shooter.setPower(0);
+    }
+
+    public void moveConveyorBelt(double power, int time) throws InterruptedException {
+        conveyorBelt.setPower(power);
+        sleep(time);
+        conveyorBelt.setPower(0);
+    }
 }

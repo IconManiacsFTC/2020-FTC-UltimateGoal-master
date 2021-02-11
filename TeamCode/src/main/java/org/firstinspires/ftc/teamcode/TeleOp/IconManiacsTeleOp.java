@@ -84,7 +84,7 @@ public class IconManiacsTeleOp extends HardwareMap_Example {
             }
 
             if(gamepad2.right_trigger == 1){ // if the gamepad 2 right trigger gets pressed....
-                bot.clawPOS += bot.SERVO_UP_POWER; // the claw position increases
+                bot.clawPOS += bot.SERVO_UP_POWER;// the claw position increases
             } else if(gamepad2.left_trigger == 1){ // if the gamepad 2 left trigger gets pressed...
                 bot.clawPOS -= bot.SERVO_DOWN_POWER; // the claw position reduces
             }
