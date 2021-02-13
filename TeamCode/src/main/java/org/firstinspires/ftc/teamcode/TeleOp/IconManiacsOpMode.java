@@ -176,7 +176,7 @@ public class IconManiacsOpMode extends OpMode
         // still under the works
 
         if(gamepad2.a) {
-                bot.shooter.setPower(0.75);
+                bot.shooter.setPower(0.65);
         } else if(gamepad2.y) {
             bot.shooter.setPower(0);
         }

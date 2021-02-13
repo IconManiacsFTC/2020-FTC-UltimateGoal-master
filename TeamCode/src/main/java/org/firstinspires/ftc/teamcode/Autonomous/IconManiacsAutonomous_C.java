@@ -31,21 +31,15 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-//import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-
-// List where other files are located that are used in this OpMode
-import org.firstinspires.ftc.robotcore.external.function.InterruptableThrowingRunnable;
-import org.firstinspires.ftc.teamcode.HardwareMap.HardwareMap_Example;
 import org.firstinspires.ftc.teamcode.IMHardwareBot;
 
-import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawClose;
 import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawOpen;
+
+//import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+// List where other files are located that are used in this OpMode
 
 /**
  * In this example:
@@ -53,11 +47,11 @@ import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawOpen;
  *
  */
 // CHAWKS: Name it something useful!
-@Autonomous(name="IM Autonomous A", group="RedTest")
+@Autonomous(name="IM Autonomous C", group="RedTest")
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
 //@Disabled
 
-public class IconManiacsAutonomous_A extends LinearOpMode {
+public class IconManiacsAutonomous_C extends LinearOpMode {
 
     IMHardwareBot bot = new IMHardwareBot();
     /*
@@ -67,21 +61,20 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
     // MUST HAVE
     @Override
     public void runOpMode() throws InterruptedException {
-
         Thread shoot = new Thread () {
             public void run () {
                 try {
-                     bot.shoot(0.61, 10000);
+                   bot.shoot(0.605, 6000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         };
 
-       Thread moveRing = new Thread (){
+        Thread moveRing = new Thread (){
             public void run () {
                 try {
-                    bot.moveConveyorBelt(1, 10000);
+                    bot.moveConveyorBelt(1, 5300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -121,7 +114,7 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
         bot.arm.setPower(0);
 
         // drives forward
-        bot.driveForward(0.75, 2415);
+        bot.driveForward(0.75, 3700);
 
         //pause
         sleep(450);
@@ -141,11 +134,11 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
         bot.moveClaw(clawOpen, 1000);
 
         // strafes right
-        bot.strafeRight(0.8, 880);
+        bot.strafeRight(0.8, 1080);
 
         // moves backwards and starts the shooter
         shoot.start();
-        bot.driveBackwards(0.75, 500);
+        bot.driveBackwards(0.75, 1850);
 
         //pause
         sleep(600);
@@ -171,7 +164,7 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
         //pause
         sleep(400);
 
-        bot.driveForward(0.7, 300);
+        bot.driveForward(0.7, 500);
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();

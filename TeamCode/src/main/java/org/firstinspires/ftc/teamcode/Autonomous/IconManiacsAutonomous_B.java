@@ -31,21 +31,15 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-//import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-
-// List where other files are located that are used in this OpMode
-import org.firstinspires.ftc.robotcore.external.function.InterruptableThrowingRunnable;
-import org.firstinspires.ftc.teamcode.HardwareMap.HardwareMap_Example;
 import org.firstinspires.ftc.teamcode.IMHardwareBot;
 
-import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawClose;
 import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawOpen;
+
+//import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+// List where other files are located that are used in this OpMode
 
 /**
  * In this example:
@@ -53,11 +47,11 @@ import static org.firstinspires.ftc.teamcode.IMHardwareBot.clawOpen;
  *
  */
 // CHAWKS: Name it something useful!
-@Autonomous(name="IM Autonomous A", group="RedTest")
+@Autonomous(name="IM Autonomous B", group="RedTest")
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
 //@Disabled
 
-public class IconManiacsAutonomous_A extends LinearOpMode {
+public class IconManiacsAutonomous_B extends LinearOpMode {
 
     IMHardwareBot bot = new IMHardwareBot();
     /*
@@ -68,26 +62,25 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Thread shoot = new Thread () {
+      Thread shoot = new Thread () {
             public void run () {
                 try {
-                     bot.shoot(0.61, 10000);
+                    bot.shoot(0.605, 10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         };
 
-       Thread moveRing = new Thread (){
+        Thread moveRing = new Thread (){
             public void run () {
                 try {
-                    bot.moveConveyorBelt(1, 10000);
+                   bot.moveConveyorBelt(1, 8000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         };
-
          // Initialize the drive system variables.
          // The init() method of the hardware class does all the work here
 
@@ -120,16 +113,9 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
         bot.claw.setPosition(0);
         bot.arm.setPower(0);
 
-        // drives forward
-        bot.driveForward(0.75, 2415);
-
-        //pause
-        sleep(450);
-
-        // strafes left
-        bot.strafeLeft(0.8, 950);
-        //pause
-        sleep(600);
+        // drives forward and starts the shooter
+        shoot.start();
+        bot.driveForward(0.75, 3250);
 
         // sets arm down
         bot.moveArm(0.45, 450);
@@ -140,27 +126,22 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
         // releases the wobble goal
         bot.moveClaw(clawOpen, 1000);
 
-        // strafes right
-        bot.strafeRight(0.8, 880);
-
-        // moves backwards and starts the shooter
-        shoot.start();
-        bot.driveBackwards(0.75, 500);
+        // moves backwards
+        bot.driveBackwards(0.75, 1400);
 
         //pause
         sleep(600);
-
         //turns right
-        bot.turnRight(0.7, 55);
+        bot.turnRight(0.7, 60);
 
-        //pause
-        sleep(600);
+        // pause
+        sleep(1000);
 
         // turns on the shooter at the same time
 
-        moveRing.start();
+       moveRing.start();
 
-        sleep(2000);
+       sleep(2000);
 
         shoot.join();
         moveRing.join();
@@ -171,7 +152,7 @@ public class IconManiacsAutonomous_A extends LinearOpMode {
         //pause
         sleep(400);
 
-        bot.driveForward(0.7, 300);
+        bot.driveForward(0.7, 450);
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();

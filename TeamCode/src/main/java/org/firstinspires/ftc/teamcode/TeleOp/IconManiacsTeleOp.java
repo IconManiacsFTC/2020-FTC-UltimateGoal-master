@@ -22,6 +22,7 @@ public class IconManiacsTeleOp extends HardwareMap_Example {
     double drive;
     double strafe;
     double rotate;
+    double speed = 0.6;
     @Override
     public void runOpMode() {
         /*
@@ -78,9 +79,15 @@ public class IconManiacsTeleOp extends HardwareMap_Example {
             bot.conveyorBelt.setPower(conveyorPower); // moves the conveyor belt
 
             if(gamepad2.a) {
-                bot.shooter.setPower(0.75);
+                bot.shooter.setPower(speed);
             } else if(gamepad2.y) {
                 bot.shooter.setPower(0);
+            }
+
+            if(gamepad2.dpad_up){
+                speed += 0.2;
+            } else if (gamepad2.dpad_down){
+                speed -= 0.2;
             }
 
             if(gamepad2.right_trigger == 1){ // if the gamepad 2 right trigger gets pressed....

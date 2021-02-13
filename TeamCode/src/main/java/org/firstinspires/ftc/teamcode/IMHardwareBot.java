@@ -78,8 +78,8 @@ public class IMHardwareBot
 
     // constants and variables to be used when running the code (specifically servos)
     public static final double SERVO_HOME =  0.0 ;
-    public static final double SERVO_UP_POWER =  .001d ;
-    public static final double SERVO_DOWN_POWER  = .001d ;
+    public static final double SERVO_UP_POWER =  .008d ;
+    public static final double SERVO_DOWN_POWER  = .008d ;
 
     // initial positions of the servos used in the program
     public static final double clawOpen = 11.5;
@@ -185,6 +185,7 @@ public class IMHardwareBot
         backRight.setPower(power);
         frontRight.setPower(power);
         sleep(time);
+        powerOff();
     }
 
     public void driveBackwards(double power, int time) throws InterruptedException {
@@ -236,7 +237,6 @@ public class IMHardwareBot
     public void shoot(double power, int time) throws InterruptedException {
         shooter.setPower(power);
         sleep(time);
-        shooter.setPower(0);
     }
 
     public void moveConveyorBelt(double power, int time) throws InterruptedException {
@@ -244,4 +244,5 @@ public class IMHardwareBot
         sleep(time);
         conveyorBelt.setPower(0);
     }
+
 }
