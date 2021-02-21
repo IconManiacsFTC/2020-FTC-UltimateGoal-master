@@ -114,7 +114,7 @@ public class IconManiacsAutonomous_C extends LinearOpMode {
         bot.arm.setPower(0);
 
         // drives forward
-        bot.driveForward(0.75, 3700);
+        bot.driveForward(0.75, 3900);
 
         //pause
         sleep(450);
@@ -138,7 +138,7 @@ public class IconManiacsAutonomous_C extends LinearOpMode {
 
         // moves backwards and starts the shooter
         shoot.start();
-        bot.driveBackwards(0.75, 1850);
+        bot.driveBackwards(0.75, 2050);
 
         //pause
         sleep(600);

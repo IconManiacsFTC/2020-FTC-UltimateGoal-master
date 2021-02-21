@@ -73,13 +73,13 @@ public class IconManiacsTeleOp extends HardwareMap_Example {
             }
 
             armPower = 0.4 * -gamepad2.left_stick_y;
-            conveyorPower  = 0.65 * -gamepad2.right_stick_y;
+            conveyorPower  = 1.0 * -gamepad2.right_stick_y;
 
             bot.arm.setPower(armPower); // moves the arm
             bot.conveyorBelt.setPower(conveyorPower); // moves the conveyor belt
 
             if(gamepad2.a) {
-                bot.shooter.setPower(speed);
+                bot.shooter.setPower(0.63);
             } else if(gamepad2.y) {
                 bot.shooter.setPower(0);
             }

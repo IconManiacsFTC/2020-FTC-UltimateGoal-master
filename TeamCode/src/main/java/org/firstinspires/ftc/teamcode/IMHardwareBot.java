@@ -78,7 +78,7 @@ public class IMHardwareBot
 
     // constants and variables to be used when running the code (specifically servos)
     public static final double SERVO_HOME =  0.0 ;
-    public static final double SERVO_UP_POWER =  .008d ;
+    public static final double SERVO_UP_POWER =  .0099d ;
     public static final double SERVO_DOWN_POWER  = .008d ;
 
     // initial positions of the servos used in the program
